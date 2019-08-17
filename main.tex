@@ -1,0 +1,158 @@
+\documentclass[12pt, oneside]{book}
+\title{A Guide to the Spanish Subjunctive}
+\author{Krithika Ravishankar}
+
+\usepackage{float}
+\usepackage[margin=1in]{geometry}
+\usepackage{tgpagella}
+\usepackage[T1]{fontenc}
+
+
+\makeatletter
+\def\l@table{\@dottedtocline{1}{1.5em}{3em}}
+\makeatother\usepackage{amssymb}
+
+\usepackage{tocbibind}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage[colorlinks=false]{hyperref}
+\hypersetup{
+	linkbordercolor = {cyan},
+}
+\usepackage{appendix}
+
+\usepackage[normalem]{ulem}
+\setlength\parindent{0pt}
+\newcommand{\nye}{\~{n}}
+\newcommand{\exc}{\textexclamdown}
+\newcommand{\arr}{$\rightarrow$}
+\newcommand{\ita}[1]{\textit{#1}}
+\newenvironment{conf}[1]
+    {\begin{center}
+		\begin{tabular}{|p{0.9\textwidth}|}
+		\hline\\
+		\large\textbf{#1} \\
+	}
+    { 
+	    \\\\\hline
+	    \end{tabular} 
+	    \end{center}
+    }
+
+\usepackage{xparse}
+\ExplSyntaxOn
+
+\NewDocumentCommand{\conjugation}{O{}m}
+ {
+  \group_begin:
+  \keys_set:nn { froggos/conjugation } { #1 }
+  \froggos_conjugation:n { #2 }
+  \group_end:
+ }
+
+\keys_define:nn { froggos/conjugation }
+ {
+  placement    .tl_set:N  = \l__froggos_conjugation_placement_tl,
+  placement    .initial:n = H,
+  caption      .tl_set:N  = \l__froggos_conjugation_caption_tl,
+  shortcaption .tl_set:N  = \l__froggos_conjugation_shortcaption_tl,
+  label        .tl_set:N  = \l__froggos_conjugation_label_tl,
+ }
+
+\seq_new:N \l__froggos_conjugation_entries_seq
+
+\cs_new_protected:Nn \froggos_conjugation:n
+ {
+  \tl_if_empty:NF \l__froggos_conjugation_caption_tl
+   {
+    \__froggos_conjugation_table_begin:V \l__froggos_conjugation_placement_tl
+    \centering
+   }
+  \seq_set_split:Nnn \l__froggos_conjugation_entries_seq { \\ } { #1 }
+  \begin{tabular}{ll}
+    \toprule
+    \textbf{Form} & \textbf{Conjugation} \\
+    \midrule
+    \textit{Yo}       & \textit{\seq_item:Nn \l__froggos_conjugation_entries_seq {1}} \\
+    \textit{T\'u}     & \textit{\seq_item:Nn \l__froggos_conjugation_entries_seq {2}} \\
+    \textit{\'El/Ella/Ud.}     & \textit{\seq_item:Nn \l__froggos_conjugation_entries_seq {3}} \\
+    \textit{Nosotr@s} & \textit{\seq_item:Nn \l__froggos_conjugation_entries_seq {4}} \\
+    \textit{Vosotr@s} & \textit{\seq_item:Nn \l__froggos_conjugation_entries_seq {5}} \\
+    \textit{Ell@s/Uds.}    & \textit{\seq_item:Nn \l__froggos_conjugation_entries_seq {6}} \\
+    \bottomrule
+  \end{tabular}
+  \tl_if_empty:NF \l__froggos_conjugation_caption_tl
+   {
+    \tl_if_empty:NTF \l__froggos_conjugation_shortcaption_tl
+     {
+      \caption{\l__froggos_conjugation_caption_tl}
+     }
+     {
+      \caption[\l__froggos_conjugation_shortcaption_tl]{\l__froggos_conjugation_caption_tl}
+     }
+    \tl_if_empty:NF \l__froggos_conjugation_label_tl
+     {
+      \label{\l__froggos_conjugation_label_tl}
+     }
+    \end{table}
+   }
+ }
+
+\cs_new_protected:Nn \__froggos_conjugation_table_begin:n
+ {
+	 \begin{table}[#1]
+ }
+\cs_generate_variant:Nn \__froggos_conjugation_table_begin:n {V}
+
+\ExplSyntaxOff
+
+
+\usepackage{tikz}
+\pagestyle{headings}
+
+
+\definecolor{gre}{rgb}{0,0.5,0.3}
+\definecolor{eye}{rgb}{0.29,0.33,0.13}
+
+\usetikzlibrary{calc,trees,positioning,arrows,fit,shapes,calc}
+
+\begin{document}
+\sloppy
+\maketitle
+\tableofcontents
+\listoftables
+\chapter{Welcome!}
+
+\input{intro.tex}
+
+\chapter{Introduction}
+\input{begin.tex}
+\chapter{Conjugation}
+\input{conj.tex}
+\chapter{Conjugation Practice}
+\input{pracconj.tex}
+\chapter{WEIRDO Clauses}
+\input{weirdo.tex}
+%\newpage
+\chapter{Practice Problems with WEIRDO Clauses}
+\input{prac1.tex}
+%\newpage
+\chapter{Other Phrases}
+\input{other.tex}
+%\newpage
+\chapter{Always, Sometimes, Never}
+\input{asn.tex}
+\chapter{Additional Practice}
+\input{prac2.tex}
+%\newpage
+\chapter{Answers}
+\input{answers.tex}
+%\newpage
+\chapter{Appendix}
+\label{sec:appendix}
+\input{appendix}
+
+\chapter{Thanks!}
+\input{thanks.tex}
+\end{document}
