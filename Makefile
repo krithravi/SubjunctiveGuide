@@ -1,4 +1,5 @@
 filename=main.tex
+
 clean: 
 	rm main.aux
 	rm main.lot
