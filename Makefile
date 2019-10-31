@@ -1,5 +1,10 @@
 filename=main.tex
 
+build:
+	pdflatex $(filename)
+	pdflatex $(filename)
+	make clean
+
 clean: 
 	rm main.aux
 	rm main.lot
